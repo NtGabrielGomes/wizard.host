@@ -1,0 +1,82 @@
+#status {
+    div {
+        background-color: var(--bg-glass);
+        border: 2px solid var(--stroke);
+        width: 15%;
+        height: 100px;
+        transition: .2s;
+        padding: 2rem;
+        p {
+            font-size: var(--font-lg);
+            color: var(--h1-dark);
+        }
+        span {
+            font-size: var(--font-xl);
+            color: var(--h2-dark);
+        }
+    }
+    div:hover {
+        background-color: var(--h1-dark);
+        p {
+            color: var(--h1-light);
+        }
+        span {
+            color: var(--h2-light);
+        }
+      
+    }
+}
+.bg-dashboard {
+    background-color: var(--bg-glass);
+    border: 2px solid var(--stroke);
+}
+.management-width {
+    width: 61%;
+    height: 600px;
+}
+#dashboard-host-management {
+    #panel {
+        padding: 1rem;
+        background-color: var(--bg-secondary);
+        border: 1px solid var(--stroke);
+    }
+    #metrics {
+        width: 80%;
+        background-color: var(--bg-glass);
+        border: 1px solid var(--stroke);
+        select {
+            padding: .5rem;
+            width: 100%;
+            color: var(--h2-dark);
+            background-color: var(--bg-glass);
+        }
+    }
+    .vps-list {
+        width: 600px;
+        align-items: center;
+        justify-content: space-around;
+        display: flex;
+        padding: 1rem;
+        transition: .2s;
+        border: 1px solid var(--stroke);
+        background-color: var(--bg-glass);
+        p {
+            color: var(--h2-dark);
+        }
+        a {
+            width: 100%;
+            align-items: center;
+            justify-content: space-around;
+            display: flex;    
+        }
+    }
+    .vps-list:hover {
+        border: 1px solid var(--brand-color);
+        transform: scale(1.02);
+    }
+    ul {
+        flex-direction: column;
+        display: flex;
+        gap: .2rem;
+    }
+}

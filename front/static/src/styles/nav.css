@@ -1,0 +1,77 @@
+#dashboard-nav {
+
+    background-color: var(--bg-secondary);
+    border-right: 2px solid var(--stroke);
+    .logo {
+        width: 100%;
+        img {
+            padding: 2rem;
+            width: 280px;
+        }
+    }
+    .dash-btn {
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 200px;
+        height: 40px;
+        display: flex;
+        color: var( --h1-dark);
+    }
+    #profile-nav {
+        background-color: var(--bg-glass);
+        border: 1px solid var(--hilight);
+        width: 90%;
+        height: 100px;
+        margin-bottom: .6rem;
+        p {
+            font-size: var(--font-md);
+            color: var(--h1-dark);
+        }
+    }
+    p {
+        margin: .5rem;
+        color: var(--h3-dark);
+    }
+    li {
+        transition: .2s;
+        background-color: var(--bg-glass);
+        border: 1px solid var(--stroke);
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+        display: flex;
+        .arrow {
+            margin-left: .5rem;
+            transition: .2s;
+        }
+    }
+    li:hover {
+        background-color: var(--h1-dark);
+        .dash-btn {
+            width: 100%;
+            color: var(--h1-light);
+        }
+        .arrow {
+            color: var(--h1-light);
+            transform: translateX(1rem);
+        }
+    }
+    .selected {
+        
+        color: var(--h1-light);
+        background-color: var(--h1-dark);
+        .arrow {
+            color: var(--h1-light);
+            transform: translateX(1rem);
+            display: block;
+        } 
+    }
+    .settings {
+        img {
+            width: 30px;
+        }
+    }
+    
+}

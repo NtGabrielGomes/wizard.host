@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="../static/global.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap" rel="stylesheet">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+
+    <link href="https://fonts.cdnfonts.com/css/superhelio" rel="stylesheet">
+    <link href="https://fonts.cdnfonts.com/css/higherpixels" rel="stylesheet">
+
+    <title>Register</title>
+</head>
+<body class="bg-01 ">
+    <main class="bg-02 h-screen flex flex-col items-center justify-center">
+        <form id="register" class="flex flex-col items-center justify-center" method="POST" action="/registry">
+            <div class="w-full ">
+                <center>
+                    <img class="icon w-full" src="static/src/assets/icons/wizzard 1.svg" alt="">
+                </center>
+            </div>
+            <fieldset class="flex  items-center mb-2 w-full">
+                <input type="email" id="email" name="email" placeholder="Email">
+            </fieldset>
+            
+            <fieldset class="flex flex-col items-center  w-full">
+                <input type="password" id="password" name="password" placeholder="Password">
+                <input type="password" id="confirmPassword" name="confirmPassword" placeholder="repeat password">
+            </fieldset>
+            <div class="flex items-center justify-center gap-2 p-5">
+                <button class="login-btn">Register</button> <p class="text-style">or</p> <a class="hilight" href="/login">Login</a>
+            </div>
+            <p style="color: white;">{{ resu }}</p>
+        </form>
+    </main>
+</body>
+</html>

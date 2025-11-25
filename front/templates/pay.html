@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="../static/global.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap" rel="stylesheet">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+
+    <link href="https://fonts.cdnfonts.com/css/superhelio" rel="stylesheet">
+    <link href="https://fonts.cdnfonts.com/css/higherpixels" rel="stylesheet">
+
+    <title>Payment</title>
+</head>
+<body class="bg-04 flex text-style">
+    <nav id="dashboard-nav" class="h-screen flex flex-col justify-between">
+        <div>
+            <a class="logo" href="/"><img src="static/src/assets/icons/wizzard 1.svg" alt=""></a>
+        </div>
+        <div class="flex items-center flex-col justify-center gap-20">
+            <div>
+                <p>Main ></p>
+                <ol class="flex flex-col gap-2">
+                    <li><a class="dash-btn" href="dashboard">Dashboard<span class="arrow">></span></a></li>
+                    <li><a class="dash-btn" href="">Minecraft<span class="arrow">></span></a></li>
+                    <li><a class="dash-btn" href="">Docs<span class="arrow">></span></a></li>
+                </ol>
+            </div>
+            <div>
+                <p>payment & buy ></p>
+                <ol class="flex flex-col gap-2">
+                    <li><a class="dash-btn" href="">Plans<span class="arrow">></span></a></li>
+                    <li><a class="dash-btn" href="">Payment<span class="arrow">></span></a></li>
+                </ol>
+            </div>
+        </div>
+        <div class="flex items-center justify-center">
+            <div id="profile-nav" class="flex gap-5 items-center justify-center">
+                <div>
+                    <a style="color: rgb(195, 0, 255);">{{username}}</a><br>
+                    <button class="text-white px-4 py-2"><a href="/logout">Logout</a></button>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <main class="flex flex-col items-center justify-center w-full h-screen">
+        <label for="coin-slider" class="text-white text-lg font-bold mb-2">Select Coins (1 to 60):</label>
+        <input id="coin-slider" type="range" min="1" max="60" value="1" step="1" class="w-1/3">
+        <div class="flex justify-between text-white mt-2 w-1/3"></div>
+        <p class="text-white mt-4">Selected Coins: <span id="selected-coins">1</span></p>
+        <p class="text-white">USD: $<span id="usd-value">5.00</span></p>
+        <p class="text-white">BTC: <span id="btc-value">Loading...</span></p>
+        <button id="pay-button" class="mt-4 bg-blue-500 text-white px-4 py-2 rounded">Pay with BTC</button>
+    </main>
+
+    <!-- QR Code Popup -->
+    <div id="qr-popup" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
+        <div class="bg-gray-800 p-6 rounded-lg max-w-md w-full text-center">
+            <h2 class="text-white text-xl font-bold mb-4">Scan to Pay</h2>
+            <img id="qr-code-image" src="" alt="Payment QR Code" class="mx-auto mb-4">
+            <p class="text-white mb-2">Wallet Address:</p>
+            <p class="text-white mb-2">Please send <span id="btc-amount-popup"></span> BTC to the address below:</p>
+            <p id="wallet-hash" class="text-white break-all mb-4"></p>
+            <button id="close-popup" class="bg-red-500 text-white px-4 py-2 rounded">Close</button>
+        </div>
+    </div>
+
+    <script>
+        const slider = document.getElementById('coin-slider');
+        const selectedCoins = document.getElementById('selected-coins');
+        const usdValue = document.getElementById('usd-value');
+        const btcValue = document.getElementById('btc-value');
+        const payButton = document.getElementById('pay-button');
+        const qrPopup = document.getElementById('qr-popup');
+        const qrCodeImage = document.getElementById('qr-code-image');
+        const walletHash = document.getElementById('wallet-hash');
+        const closePopup = document.getElementById('close-popup');
+
+        async function fetchBTCPrice() {
+            try {
+                const response = await fetch('https://api.coinbase.com/v2/exchange-rates?currency=USD');
+                const data = await response.json();
+                return 1 / parseFloat(data.data.rates.BTC); // Correct USD to BTC conversion rate
+            } catch (error) {
+                console.error('Error fetching BTC price:', error);
+                return null;
+            }
+        }
+
+        async function updateValues() {
+            const coins = slider.value;
+            const usd = (coins * 5).toFixed(2); // Assuming 1 coin = $5.00
+            selectedCoins.textContent = coins;
+            usdValue.textContent = usd;
+
+            const btcRate = await fetchBTCPrice();
+            if (btcRate) {
+                const btc = (usd / btcRate).toFixed(8); // Convert USD to BTC
+                btcValue.textContent = btc;
+            } else {
+                btcValue.textContent = 'Error';
+            }
+        }
+
+        slider.addEventListener('input', updateValues);
+
+        payButton.addEventListener('click', async () => {
+            const coins = slider.value;
+            try {
+                const response = await fetch('/api/buy-coins', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ coins: parseInt(coins) }),
+                    credentials: 'include'
+                });
+
+                if (response.ok) {
+                    const result = await response.json();
+                    // Show QR code popup
+                    qrCodeImage.src = result.qr_code;
+                    walletHash.textContent = result.wallet_hash;
+                    document.getElementById('btc-amount-popup').textContent = parseFloat(result['btc-amount-popup']).toFixed(8);                    qrPopup.classList.remove('hidden');
+        
+                } else {
+                    alert('failed. Please try again.');
+                }
+            } catch (error) {
+                console.error('Error during payment:', error);
+                alert('An error occurred. Please try again.');
+            }
+        });
+
+        closePopup.addEventListener('click', () => {
+            qrPopup.classList.add('hidden');
+        });
+
+        // Initialize values on page load
+        updateValues();
+    </script>
+</body>
+</html>

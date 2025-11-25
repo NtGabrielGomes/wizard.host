@@ -1,0 +1,44 @@
+form {
+    font-family: 'superhelio _regular', sans-serif;
+    background-color: var(--stroke);
+    border: 4px solid var(--background);
+    padding: 1rem;
+
+    input {
+        appearance: textfield;
+        color: var(--h2-dark);
+        width: 100%;
+        background-color: var(--background);
+        border: 2px solid var(--stroke);
+        padding: .6rem;
+    }
+    .login-btn {
+        width: 180px;
+        height: 2.5rem;
+        background-color: var(--h1-dark);
+        color: var(--h1-light);
+        border-bottom: 4px solid var(--h2-dark);
+        transition: 0.2s;
+    }
+    .login-btn:hover {
+        top: 2px;
+        position: relative;
+        width: 180px;
+        height: 2.5rem;
+        border-bottom: 2px solid var(--h2-dark);
+        background-color: var(--h2-dark);
+        color: var(--h1-light);
+    }
+    .text-style {
+        color: var(--h2-dark);
+    }
+    .hilight {
+        color: var(--brand-color); 
+    }
+    .hilight:hover {
+        border-bottom: 1px solid var(--brand-color);
+    }
+    .icon {
+        width: 280px;
+    }
+}

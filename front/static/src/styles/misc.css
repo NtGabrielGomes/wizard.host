@@ -1,0 +1,45 @@
+.announcments {
+    background-color: var(--stroke);
+    font-family: 'superhelio _regular', sans-serif;
+    color: var(--h2-dark);
+    padding-bottom: .3rem;
+    border-bottom: 6px solid var(--background);
+    #status-color {
+        animation: glow 1s ease infinite;
+        margin-top: .4rem;
+        margin-right: .5rem;
+        height:.5rem;
+        width: .5rem;
+        background-color: rgb(25, 172, 25);
+    }
+}
+.text-container {
+    max-width: 800px;
+}
+.transtion-shadow-01 {
+    margin-top: -10rem;
+    height: 130px;
+    background: linear-gradient(to top, #0c0c2e, #15162000);
+
+}
+.transtion-shadow-02 {
+    margin-top: -5rem;
+    height: 50px;
+    background: linear-gradient(to top, #140a42ea, #1e235c00);
+
+}
+.btn-nav {
+    padding: .2rem 1rem;
+    transition: .3s;
+}
+.btn-nav:hover {
+    color: var(--h1-light);
+    background-color: var(--h1-dark);
+}
+.about-text {
+    width: 1000px;
+    height: 800px;
+}
+.text-style {
+    font-family: 'superhelio _regular', sans-serif;
+}
